@@ -4,10 +4,16 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useKeenSlider } from 'keen-slider/react'
 import Stripe from 'stripe'
+import { Handbag } from 'phosphor-react'
 
 import { stripe } from '@/lib/stripe'
 
-import { HomeContainer, Product } from '@/styles/pages/home'
+import {
+  ChartButton,
+  HomeContainer,
+  Product,
+  ProductDescription,
+} from '@/styles/pages/home'
 import 'keen-slider/keen-slider.min.css'
 
 interface HomeProps {
@@ -43,8 +49,13 @@ export default function Home({ products }: HomeProps) {
               <Image src={product.imageUrl} width={520} height={480} alt="" />
 
               <footer>
-                <strong>{product.name}</strong>
-                <span>{product.price}</span>
+                <ProductDescription>
+                  <strong>{product.name}</strong>
+                  <span>{product.price}</span>
+                </ProductDescription>
+                <ChartButton>
+                  <Handbag size={24} weight="bold" />
+                </ChartButton>
               </footer>
             </Product>
           </Link>
