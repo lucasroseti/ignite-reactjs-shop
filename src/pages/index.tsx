@@ -9,7 +9,7 @@ import { Handbag } from 'phosphor-react'
 import { stripe } from '@/lib/stripe'
 
 import {
-  ChartButton,
+  CartButton,
   HomeContainer,
   Product,
   ProductDescription,
@@ -53,9 +53,9 @@ export default function Home({ products }: HomeProps) {
                   <strong>{product.name}</strong>
                   <span>{product.price}</span>
                 </ProductDescription>
-                <ChartButton>
+                <CartButton>
                   <Handbag size={24} weight="bold" />
-                </ChartButton>
+                </CartButton>
               </footer>
             </Product>
           </Link>

@@ -5,7 +5,7 @@ export const HomeContainer = styled('main', {
   width: '100%',
   maxWidth: 'calc(100vw - ((100vw - 1180px) / 2))',
   marginLeft: 'auto',
-  minHeight: '856px',
+  minHeight: '656px',
 })
 
 export const Product = styled('div', {
@@ -68,11 +68,15 @@ export const ProductDescription = styled('div', {
   },
 })
 
-export const ChartButton = styled('button', {
+export const CartButton = styled('button', {
   background: '$green500',
   border: 0,
   borderRadius: 6,
   color: '$white',
   padding: '0.75rem',
   cursor: 'pointer',
+
+  '&:hover': {
+    background: '$green300',
+  },
 })
