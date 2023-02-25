@@ -18,29 +18,32 @@ globalStyles()
 
 export default function App({ Component, pageProps }: AppProps) {
   const countOfShirtsInCart = 0
+  const isQuantityProdutsEmpty = pageProps.quantityProducts !== undefined
 
   return (
     <Container>
-      <Header>
+      <Header center={isQuantityProdutsEmpty}>
         <Image src={logoImg.src} width={129} height={52} alt="" />
 
-        <Dialog.Root>
-          <Dialog.Trigger asChild>
-            <CartSection>
-              <CartButton>
-                <Handbag size={24} weight="bold" />
-              </CartButton>
+        {!pageProps.quantityProducts && (
+          <Dialog.Root>
+            <Dialog.Trigger asChild>
+              <CartSection>
+                <CartButton>
+                  <Handbag size={24} weight="bold" />
+                </CartButton>
 
-              {countOfShirtsInCart > 0 && (
-                <CartCounter>
-                  <span>{countOfShirtsInCart}</span>
-                </CartCounter>
-              )}
-            </CartSection>
-          </Dialog.Trigger>
+                {countOfShirtsInCart > 0 && (
+                  <CartCounter>
+                    <span>{countOfShirtsInCart}</span>
+                  </CartCounter>
+                )}
+              </CartSection>
+            </Dialog.Trigger>
 
-          <CartDialog />
-        </Dialog.Root>
+            <CartDialog />
+          </Dialog.Root>
+        )}
       </Header>
 
       <Component {...pageProps} />

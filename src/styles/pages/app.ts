@@ -16,6 +16,14 @@ export const Header = styled('header', {
 
   display: 'flex',
   justifyContent: 'space-between',
+
+  variants: {
+    center: {
+      true: {
+        justifyContent: 'center',
+      },
+    },
+  },
 })
 
 export const CartButton = styled('button', {
