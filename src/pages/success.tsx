@@ -74,7 +74,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const products = session.line_items!.data
 
   const quantityProducts =
-    products.length > 1 ? `${products} camisetas` : 'uma camiseta'
+    products.length > 1 ? `${products.length} camisetas` : 'uma camiseta'
 
   const productsData = products.map((product) => {
     const productData = product.price!.product as Stripe.Product

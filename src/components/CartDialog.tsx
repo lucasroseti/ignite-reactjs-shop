@@ -1,8 +1,9 @@
 // import Image from 'next/image'
-import { ReactNode, useContext } from 'react'
+import { ReactNode, useContext, useState } from 'react'
 import Image from 'next/image'
 import * as Dialog from '@radix-ui/react-dialog'
 import { X } from 'phosphor-react'
+import axios from 'axios'
 
 import { CartContext } from '@/contexts/CartCheckout'
 
@@ -28,7 +29,29 @@ interface CartDialogProps {
 
 export function CartDialog({ children }: CartDialogProps) {
   const { cart, removeProductInCart } = useContext(CartContext)
-  console.log(cart)
+
+  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
+    useState(false)
+
+  async function handleBuyProduct() {
+    try {
+      const products = cart.products.map((product) => {
+        return {
+          price: product.defaultPriceId,
+          quantity: 1,
+        }
+      })
+      setIsCreatingCheckoutSession(true)
+      const response = await axios.post('/api/checkout', { products })
+      const { checkoutUrl } = response.data
+
+      window.location.href = checkoutUrl
+    } catch (error) {
+      // Conectar com uma ferramenta de observabilidade (Datadog / Sentry)
+      setIsCreatingCheckoutSession(false)
+      alert('Falha ao redirecionar ao checkout')
+    }
+  }
 
   function handleRemoveProductInChart(productId: string) {
     removeProductInCart(productId)
@@ -98,7 +121,12 @@ export function CartDialog({ children }: CartDialogProps) {
                 </div>
               </CartTotal>
 
-              <button>Finalizar Compra</button>
+              <button
+                disabled={isCreatingCheckoutSession}
+                onClick={handleBuyProduct}
+              >
+                Finalizar Compra
+              </button>
             </CartCheckout>
           </CartSection>
 
