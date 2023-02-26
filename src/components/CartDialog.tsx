@@ -6,6 +6,7 @@ import { X } from 'phosphor-react'
 import axios from 'axios'
 
 import { CartContext } from '@/contexts/CartCheckout'
+import { priceFormatter } from '@/utils/formatter'
 
 import {
   CartCheckout,
@@ -64,10 +65,7 @@ export function CartDialog({ children }: CartDialogProps) {
       return totalItems + totalProduct
     }, 0)
 
-    return new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL',
-    }).format(totalItems)
+    return priceFormatter.format(totalItems)
   }
 
   return (

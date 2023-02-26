@@ -11,6 +11,7 @@ import { stripe } from '@/lib/stripe'
 
 import { CartContext } from '@/contexts/CartCheckout'
 import { ProductType } from '@/reducers/cart/reducer'
+import { priceFormatter } from '@/utils/formatter'
 
 import { CartDialog } from '@/components/CartDialog'
 
@@ -85,10 +86,7 @@ export const getStaticProps: GetStaticProps = async () => {
       id: product.id,
       name: product.name,
       imageUrl: product.images[0],
-      price: new Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL',
-      }).format(price.unit_amount! / 100),
+      price: priceFormatter.format(price.unit_amount! / 100),
       defaultPriceId: price.id,
     }
   })
