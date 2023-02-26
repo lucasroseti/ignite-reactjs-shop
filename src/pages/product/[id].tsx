@@ -11,6 +11,7 @@ import { CartContext } from '@/contexts/CartCheckout'
 import { priceFormatter } from '@/utils/formatter'
 
 import { CartDialog } from '@/components/CartDialog'
+import { LoadingCardProduct } from '@/components/LoadingCardProduct'
 
 import {
   ProductContainer,
@@ -39,7 +40,7 @@ export default function Product({ product }: ProductProps) {
   }
 
   if (isFallback) {
-    return <p>Loading...</p>
+    return <LoadingCardProduct />
   }
 
   return (
