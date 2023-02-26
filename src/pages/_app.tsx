@@ -6,21 +6,15 @@ import { Handbag } from 'phosphor-react'
 import { CartContextProvider } from '@/contexts/CartCheckout'
 
 import { CartDialog } from '@/components/CartDialog'
+import { Counter } from '@/components/Counter'
 
 import logoImg from '@/assets/logo.svg'
-import {
-  CartButton,
-  CartCounter,
-  CartSection,
-  Container,
-  Header,
-} from '@/styles/pages/app'
+import { CartButton, CartSection, Container, Header } from '@/styles/pages/app'
 import { globalStyles } from '@/styles/global'
 
 globalStyles()
 
 export default function App({ Component, pageProps }: AppProps) {
-  const countOfShirtsInCart = 0
   const isQuantityProdutsEmpty = pageProps.quantityProducts !== undefined
 
   return (
@@ -37,12 +31,7 @@ export default function App({ Component, pageProps }: AppProps) {
                 <CartButton>
                   <Handbag size={24} weight="bold" />
                 </CartButton>
-
-                {countOfShirtsInCart > 0 && (
-                  <CartCounter>
-                    <span>{countOfShirtsInCart}</span>
-                  </CartCounter>
-                )}
+                <Counter />
               </CartSection>
             </CartDialog>
           )}

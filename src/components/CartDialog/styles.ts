@@ -142,6 +142,7 @@ export const CartCheckout = styled('div', {
     backgroundColor: '$green500',
     color: '$white',
     padding: '1.25rem 0',
+    border: 0,
     borderRadius: 8,
     fontWeight: 700,
     fontSize: '$md',
