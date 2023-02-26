@@ -1,3 +1,4 @@
+import { useContext } from 'react'
 import { GetStaticProps } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
@@ -8,6 +9,11 @@ import { Handbag } from 'phosphor-react'
 
 import { stripe } from '@/lib/stripe'
 
+import { CartContext } from '@/contexts/CartCheckout'
+import { ProductType } from '@/reducers/cart/reducer'
+
+import { CartDialog } from '@/components/CartDialog'
+
 import {
   CartButton,
   HomeContainer,
@@ -17,20 +23,22 @@ import {
 import 'keen-slider/keen-slider.min.css'
 
 interface HomeProps {
-  products: {
-    id: string
-    name: string
-    imageUrl: string
-    price: string
-  }[]
+  products: ProductType[]
 }
+
 export default function Home({ products }: HomeProps) {
+  const { addProductInCart } = useContext(CartContext)
+
   const [sliderRef] = useKeenSlider({
     slides: {
       perView: 2,
       spacing: 48,
     },
   })
+
+  function handleAddProductInCart(product: ProductType) {
+    addProductInCart(product)
+  }
 
   return (
     <>
@@ -40,25 +48,25 @@ export default function Home({ products }: HomeProps) {
 
       <HomeContainer ref={sliderRef} className="keen-slider">
         {products.map((product) => (
-          <Link
-            href={`/product/${product.id}`}
-            key={product.id}
-            prefetch={false}
-          >
-            <Product className="keen-slider__slide">
+          <Product key={product.id} className="keen-slider__slide">
+            <Link href={`/product/${product.id}`} prefetch={false}>
               <Image src={product.imageUrl} width={520} height={480} alt="" />
-
-              <footer>
+            </Link>
+            <footer>
+              <Link href={`/product/${product.id}`} prefetch={false}>
                 <ProductDescription>
                   <strong>{product.name}</strong>
                   <span>{product.price}</span>
                 </ProductDescription>
-                <CartButton>
+              </Link>
+
+              <CartDialog>
+                <CartButton onClick={() => handleAddProductInCart(product)}>
                   <Handbag size={24} weight="bold" />
                 </CartButton>
-              </footer>
-            </Product>
-          </Link>
+              </CartDialog>
+            </footer>
+          </Product>
         ))}
       </HomeContainer>
     </>
@@ -81,6 +89,7 @@ export const getStaticProps: GetStaticProps = async () => {
         style: 'currency',
         currency: 'BRL',
       }).format(price.unit_amount! / 100),
+      defaultPriceId: price.id,
     }
   })
 

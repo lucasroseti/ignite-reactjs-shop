@@ -14,7 +14,7 @@ export const Content = styled(Dialog.Content, {
   flexDirection: 'column',
   minWidth: '32rem',
   borderRadius: 6,
-  padding: '3rem',
+  padding: '3rem 0',
   background: '$gray800',
   position: 'fixed',
 
@@ -24,10 +24,10 @@ export const Content = styled(Dialog.Content, {
 })
 
 export const Title = styled(Dialog.Title, {
-  paddingTop: '1.5rem',
   fontWeight: 'bold',
   fontSize: '$lg',
   lineHeight: 1.6,
+  padding: '1.5rem 3rem 0',
 })
 
 export const Close = styled(Dialog.Close, {
@@ -46,13 +46,25 @@ export const CartSection = styled('section', {
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
+
+  'div::-webkit-scrollbar': {
+    width: '0.5rem',
+  },
+
+  'div::-webkit-scrollbar-thumb': {
+    backgroundColor: '$green500',
+    borderRadius: 8,
+  },
 })
 
 export const CartProducts = styled('div', {
+  maxHeight: 450,
+  overflow: 'auto',
   display: 'flex',
   flexDirection: 'column',
   gap: '1.5rem',
-  paddingTop: '2rem',
+  padding: '0 3rem 0 3rem',
+  marginTop: '2rem',
 })
 
 export const CartProduct = styled('div', {
@@ -112,6 +124,7 @@ export const CartCheckout = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   gap: '3.5rem',
+  padding: '0 3rem',
 
   div: {
     display: 'flex',

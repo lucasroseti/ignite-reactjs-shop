@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
@@ -7,6 +7,10 @@ import Stripe from 'stripe'
 import axios from 'axios'
 
 import { stripe } from '@/lib/stripe'
+
+import { CartContext } from '@/contexts/CartCheckout'
+
+import { CartDialog } from '@/components/CartDialog'
 
 import {
   ProductContainer,
@@ -24,10 +28,13 @@ interface ProductProps {
     defaultPriceId: string
   }
 }
+
 export default function Product({ product }: ProductProps) {
   const { isFallback } = useRouter()
   const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
     useState(false)
+
+  const { addProductInCart } = useContext(CartContext)
 
   async function handleBuyProduct() {
     try {
@@ -43,6 +50,10 @@ export default function Product({ product }: ProductProps) {
       setIsCreatingCheckoutSession(false)
       alert('Falha ao redirecionar ao checkout')
     }
+  }
+
+  function handleAddProductInCart() {
+    addProductInCart(product)
   }
 
   if (isFallback) {
@@ -66,12 +77,14 @@ export default function Product({ product }: ProductProps) {
 
           <p>{product.description}</p>
 
-          <button
-            disabled={isCreatingCheckoutSession}
-            onClick={handleBuyProduct}
-          >
-            Colocar na sacola
-          </button>
+          <CartDialog>
+            <button
+              disabled={isCreatingCheckoutSession}
+              onClick={handleAddProductInCart}
+            >
+              Colocar na sacola
+            </button>
+          </CartDialog>
         </ProductDetails>
       </ProductContainer>
     </>
